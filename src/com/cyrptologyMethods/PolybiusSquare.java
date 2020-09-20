@@ -1,4 +1,4 @@
-package com.company;
+package com.cyrptologyMethods;
 
 import java.util.*;
 
@@ -8,7 +8,7 @@ public class PolybiusSquare {
     HashMap<Integer, Character> decryptKey = new HashMap<>();
 
 
-    PolybiusSquare(){
+    public PolybiusSquare(){
         int curAsciiLetter = 97;
         for(int y = 1; y<5+1; y++){
             for(int x = 1; x<5+1; x++){

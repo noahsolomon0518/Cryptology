@@ -1,11 +1,9 @@
-package com.company;
-
-import javax.print.DocFlavor;
+package com.cyrptologyMethods;
 
 public class SpartanScytale {
     int nColChars;
 
-    SpartanScytale(int _nColChars){
+    public SpartanScytale(int _nColChars){
         nColChars = _nColChars;
     }
 

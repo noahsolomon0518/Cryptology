@@ -1,4 +1,4 @@
-package com.company;
+package com.cyrptologyMethods;
 import java.util.*;
 
 public class EnglishAtbash {
@@ -6,7 +6,7 @@ public class EnglishAtbash {
     private HashMap<Character,Character> encryptKey = new HashMap<>();
     private HashMap<Character,Character> decryptKey = new HashMap<>();
 
-    EnglishAtbash(){
+    public EnglishAtbash(){
 
         for(int i = 97; i<=122; i++){
             encryptKey.put((char) i, (char)(122-(i-97)));

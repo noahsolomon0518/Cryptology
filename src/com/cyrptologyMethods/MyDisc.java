@@ -1,4 +1,6 @@
-package com.company;
+package com.cyrptologyMethods;
+
+import com.decryptors.englishDict.EnglishDict;
 
 import java.util.*;
 

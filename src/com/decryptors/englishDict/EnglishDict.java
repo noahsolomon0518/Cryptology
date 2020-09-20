@@ -1,4 +1,4 @@
-package com.company;
+package com.decryptors.englishDict;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -9,11 +9,11 @@ public class EnglishDict {
 
     private HashMap<String, Integer> words = new HashMap<>();
 
-    EnglishDict() {
+    public EnglishDict() {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(
-                    "src/com/company/words.txt"));
+                    "src/com/decryptors/englishDict/words.txt"));
             String line = reader.readLine();
             while (line != null) {
                 words.put(line,1);

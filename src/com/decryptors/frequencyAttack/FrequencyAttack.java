@@ -1,8 +1,9 @@
-package com.company;
+package com.decryptors.frequencyAttack;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import com.decryptors.frequencyAttack.Util;
 
 
 
@@ -15,7 +16,7 @@ public class FrequencyAttack {
     String common2Letters[] = {"of", "to", "in", "it", "is", "be", "as", "at", "so", "we", "he", "by", "or", "on", "do", "if", "me", "my", "up", "an", "go", "no", "us", "am"};
 
 
-    FrequencyAttack(){
+    public FrequencyAttack(){
         createLetterFreq();
     }
 
@@ -24,7 +25,7 @@ public class FrequencyAttack {
         int ASCIIchar = 97;
         try {
             reader = new BufferedReader(new FileReader(
-                    "src/com/company/letterFreq.txt"));
+                    "src/com/decryptors/frequencyAttack/letterFreq.txt"));
             String line = reader.readLine();
             while (line != null) {
                 letterFreq.put((char)ASCIIchar,Double.parseDouble(line));
@@ -40,30 +41,10 @@ public class FrequencyAttack {
 
 
 
-    public void attack2Letters(String encodedStr){
-        HashMap encodedLetterFreq = getLetterFreq(encodedStr, 0.8);
-        for(Character letter: commonLetters){
-            System.out.print("");
-        }
+    public void attackCommonLetters(String str, double thresh){
+        HashMap<Character,Double> letterFreq = Util.letterFrequency(str);
+        System.out.print(letterFreq);
     }
 
-    private HashMap getLetterFreq(String encodedRawStr, Double thresh){
-        HashMap<Character,Double> letterFreq = new HashMap<>();
-        String encodedStr = encodedRawStr.replaceAll("\\s+","");
-        for(int i = 0; i<encodedStr.length(); i++){
-            if(letterFreq.containsKey(encodedStr.charAt(i))){
-                letterFreq.put(encodedStr.charAt(i), letterFreq.get(encodedStr.charAt(i))+1);
-            }else{
-                letterFreq.put(encodedStr.charAt(i), 1.0);
-            }
-        }
-        for (Map.Entry<Character, Double> set : letterFreq.entrySet()) {
-            Character key = set.getKey();
-            letterFreq.put(key,set.getValue()/encodedStr.length());
-            if(letterFreq.get(key)<thresh){
-                letterFreq.remove(key);
-            }
-        }
-        return letterFreq;
-    }
+
 }
