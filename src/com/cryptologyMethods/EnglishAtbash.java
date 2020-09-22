@@ -1,4 +1,4 @@
-package com.cyrptologyMethods;
+package com.cryptologyMethods;
 import java.util.*;
 
 public class EnglishAtbash {

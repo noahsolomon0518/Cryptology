@@ -1,4 +1,4 @@
-package com.cyrptologyMethods;
+package com.cryptologyMethods;
 
 import com.decryptors.englishDict.EnglishDict;
 
@@ -12,7 +12,7 @@ public class MyDisc {
     ArrayList<String> allValidWordsPerShift = new ArrayList<>();
 
 
-    MyDisc(int totShift){
+    public MyDisc(int totShift){
 
         shift(totShift);
     }
