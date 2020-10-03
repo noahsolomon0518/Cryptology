@@ -75,9 +75,9 @@ public class MyDisc {
         for(int i = 3; i<str.length(); i++){
 
             String possibleWord = str.substring(0,i);
-            if(dict.isWord(possibleWord)){
-                allValidWordsPerShift.add(possibleWord);
-            }
+            //if(dict.isWord(possibleWord)){
+             //   allValidWordsPerShift.add(possibleWord);
+            //}
 
         }
         if(str.length()>1){

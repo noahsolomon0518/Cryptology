@@ -1,90 +1,89 @@
 package com.decryptors;
 
+import com.decryptors.englishDict.EnglishDict;
 import com.decryptors.frequencyAttack.CommonWords;
-
+import java.util.stream.Collectors;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class CipherText {
-    private String cipherText;
-    private String subText;
-    private Character cipherCharMap[];
-    private Character plainCharMap[];
+    public String cipherText;
+    public String partialPlainText;
     private HashMap<Character, Double> letterFreq = new HashMap<>();
     private CommonWords cw = new CommonWords();
-
+    private List testDecryptions = new ArrayList<String>();
     public CipherText(String _cipherText){
         cipherText = _cipherText;
     }
+    private String tmp[];
+    private EnglishDict dict = new EnglishDict();
 
 
-    public void setSubMap(Character cipherChar[], Character plainChar[]){
-        cipherCharMap = cipherChar;
-        plainCharMap = plainChar;
-    }
-
-    public void setSubMap(Character cipherChar, Character plainChar){
-        cipherCharMap = new Character[]{cipherChar};
-        plainCharMap = new Character[]{plainChar};
+    public void setPartialPlain(String _partialPlainText){
+        partialPlainText = _partialPlainText;
     }
 
 
 
+    //Based on partialPlainText, method test if common words fit into string. Unknown parts of string are "_".
+    public List testCommonWords(){
 
-    //Can throw in multiple characters
-    public String substitute(){
-        String plainTextCharacters = "";
-        subText = cipherText;
-        int length = cipherCharMap.length<plainCharMap.length ? cipherCharMap.length:plainCharMap.length;
-        for(int i = 0; i<length; i++){
-            if(plainCharMap[i]!=cipherCharMap[i]){
-                subText = subText.replaceAll(""+plainCharMap[i],"_");
-                System.out.println(subText);
-                System.out.println("Replace " + plainCharMap[i] + " with _");
+        Character[] partialPTUnique = partialPlainText.chars().mapToObj(c -> (char)c).toArray(Character[]::new);
+
+        HashMap<Integer, String[]> commonWords = cw.filteredCommonWords(partialPTUnique);
+
+        String subTextByWord[] = partialPlainText.split("\\s");
+
+        List subTextByWordList = Arrays.stream(subTextByWord)
+                .map(x->dict.possibleWords(x))
+                .collect(Collectors.toCollection(LinkedList::new));
+
+        System.out.println(subTextByWordList);
+        String tmp[] = new String[subTextByWordList.size()];
+        recCollectToStrings(subTextByWordList,0, tmp);
+        return testDecryptions;
+    }
+
+    private void recCollectToStrings(List<List> _subTextByWordList, int wordPos, String _tmp[]){
+        _subTextByWordList.get(wordPos).forEach( x -> {
+            _tmp[wordPos] = x.toString();
+            if(wordPos< _subTextByWordList.size()-1){
+                recCollectToStrings(_subTextByWordList, wordPos+1, _tmp);
+            }else{
+                testDecryptions.add(String.join(" ",_tmp));
             }
-            System.out.println(subText);
-            subText = subText.replaceAll(""+cipherCharMap[i], ""+plainCharMap[i]);
-            System.out.println("Replace " + cipherCharMap[i] + " with" + plainCharMap[i]);
-            System.out.println(subText);
-            plainTextCharacters+=plainCharMap[i];
-        }
-        System.out.println(subText);
-        subText = subText.replaceAll("[^"+plainTextCharacters+"\\s]", "_");
-        System.out.println(subText);
-        return subText;
+
+
+        });
+
     }
+    //Test individual word with all possible common words
+    private List possibleCommonWord(String testWord, List commonWord){
 
-
-    public String[] testCommonWords(){
-        HashMap<Integer, String[]> commonWords = cw.filteredCommonWords(plainCharMap);
-
-        String subTextByWord[] = subText.split("\\s");
-
-        subTextByWord = Arrays.stream(subTextByWord)
-                .map(x->possibleCommonWord(x,commonWords.get(x.length())))
-                .toArray(String[]::new);
-
-        return subTextByWord;
-    }
-
-    private String possibleCommonWord(String testWord, String commonWord[]){
+        List<String> possibleWords = new LinkedList<>();
         if(commonWord!=null && !testWord.replaceAll("_", "").equals("")) {
-            for (String word : commonWord) {
+            commonWord.forEach(word -> {
+                boolean shouldAdd = true;
                 for (int i = 0; i < testWord.length(); i++) {
-                    if (testWord.charAt(i) != word.charAt(i) && testWord.charAt(i) != '_') {
+                    if (testWord.charAt(i) != word.toString().charAt(i) && testWord.charAt(i) != '_') {
+                        shouldAdd = false;
                         break;
                     }
                 }
-                return word;
-            }
+                if(shouldAdd){
+                    possibleWords.add(word.toString());
+                }
+
+            });
         }
-        return testWord;
+        possibleWords.add(testWord);
+        return possibleWords;
     }
 
     private void createLetterFreq(){
+        letterFreq.clear();
         BufferedReader reader;
         int ASCIIchar = 97;
         try {

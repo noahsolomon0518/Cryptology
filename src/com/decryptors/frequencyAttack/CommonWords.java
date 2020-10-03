@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class CommonWords {
     private String[][] commonWords = new String[4][];
 
-
+    //Creates double array of common words. At some point may be good idea to change to hashmap similar to method below.
     public CommonWords(){
         BufferedReader reader;
         try {
@@ -33,16 +33,13 @@ public class CommonWords {
     }
 
 
-
+    //returns common words that have provided letters in them
     public HashMap<Integer, String[]> filteredCommonWords(Character letters[]){
         HashMap<Integer,String[]> filteredCommonWords = new HashMap<>();
         for(int i = 1; i<4;i++){
             filteredCommonWords.put(i+1,Arrays.stream(commonWords[i]).filter(x -> containsOneChar(letters,x)).toArray(String[]::new));
         }
 
-        for(int i = 1; i<4;i++){
-            System.out.println(Arrays.toString(filteredCommonWords.get(i+1)));
-        }
 
         return filteredCommonWords;
     }
@@ -55,6 +52,5 @@ public class CommonWords {
             }
         }
         return false;
-
     }
 }
