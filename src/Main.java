@@ -1,5 +1,6 @@
 //Type plaintext in lowercase without special characters, spaces, or punctuation
 
+import com.cryptologyMethods.EnglishAtbash;
 import com.decryptors.Decryptool;
 import com.decryptors.CipherText;
 import com.decryptors.SubstitutionCipherText;
@@ -11,11 +12,9 @@ import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
-        EnglishDict dict = new EnglishDict();
-        System.out.println(dict.getWordByLengthCharacter(4,'r', 0));
 
-        SubstitutionCipherText ct = new SubstitutionCipherText("glb obxiiv ifhbp zelzlixqb zxhb yly");
-        ct.setSubMap('x',  'e');
+        SubstitutionCipherText ct = new SubstitutionCipherText("dsviv blf gsviv ziv yvvm xlnv lm");
+        ct.setSubMap(new Character[]{'v','l','n','x'},  new Character[]{'e','o','m','c'});
         ct.substitute();
         ct.crackCode();
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.decryptors.Decryptool.checkContradictions;
+
 public class SubstitutionCipherText extends CipherText{
 
     public SubstitutionCipherText(String _cipherText){
@@ -23,40 +25,17 @@ public class SubstitutionCipherText extends CipherText{
 
 
     public void crackCode() {
-        List testDecryptions = super.testCommonWords();
-        System.out.println("TEST"+testDecryptions);
-        checkContradictions(testDecryptions);
+        List testDecryptions = super.testCommonWords(super.partialPlainText);
+
+
+        checkContradictions(testDecryptions, super.cipherText);
 
 
 
     }
 
 
-    public void checkContradictions(List _testDecryptions){
-        HashMap<Character, Character> contraMap = new HashMap<>();
-        String _cipherText = super.cipherText;
 
-        _testDecryptions.forEach( x ->{
-            boolean isContra = false;
-            String possibleMapping = x.toString();
-            contraMap.clear();
-            for(int i = 0; i<possibleMapping.length(); i++){
-                if(contraMap.containsKey(_cipherText.charAt(i)) ){
-                    if(possibleMapping.charAt(i) != contraMap.get(_cipherText.charAt(i))){
-                        isContra = true;
-                        break;
-                    }
-
-                }else{
-                    contraMap.put(_cipherText.charAt(i), possibleMapping.charAt(i));
-                }
-
-            }
-            if(!isContra){
-                System.out.println(possibleMapping + " is possible");
-            }
-        });
-    }
 
     //Can throw in multiple characters
     public String substitute(){

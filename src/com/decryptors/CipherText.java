@@ -12,7 +12,6 @@ public class CipherText {
     public String cipherText;
     public String partialPlainText;
     private HashMap<Character, Double> letterFreq = new HashMap<>();
-    private CommonWords cw = new CommonWords();
     private List testDecryptions = new ArrayList<String>();
     public CipherText(String _cipherText){
         cipherText = _cipherText;
@@ -28,21 +27,16 @@ public class CipherText {
 
 
     //Based on partialPlainText, method test if common words fit into string. Unknown parts of string are "_".
-    public List testCommonWords(){
-
-        Character[] partialPTUnique = partialPlainText.chars().mapToObj(c -> (char)c).toArray(Character[]::new);
-
-        HashMap<Integer, String[]> commonWords = cw.filteredCommonWords(partialPTUnique);
-
-        String subTextByWord[] = partialPlainText.split("\\s");
+    public List testCommonWords(String _partialPlainText){
+        String subTextByWord[] = _partialPlainText.split("\\s");
 
         List subTextByWordList = Arrays.stream(subTextByWord)
                 .map(x->dict.possibleWords(x))
                 .collect(Collectors.toCollection(LinkedList::new));
-
         System.out.println(subTextByWordList);
         String tmp[] = new String[subTextByWordList.size()];
         recCollectToStrings(subTextByWordList,0, tmp);
+
         return testDecryptions;
     }
 
@@ -58,28 +52,6 @@ public class CipherText {
 
         });
 
-    }
-    //Test individual word with all possible common words
-    private List possibleCommonWord(String testWord, List commonWord){
-
-        List<String> possibleWords = new LinkedList<>();
-        if(commonWord!=null && !testWord.replaceAll("_", "").equals("")) {
-            commonWord.forEach(word -> {
-                boolean shouldAdd = true;
-                for (int i = 0; i < testWord.length(); i++) {
-                    if (testWord.charAt(i) != word.toString().charAt(i) && testWord.charAt(i) != '_') {
-                        shouldAdd = false;
-                        break;
-                    }
-                }
-                if(shouldAdd){
-                    possibleWords.add(word.toString());
-                }
-
-            });
-        }
-        possibleWords.add(testWord);
-        return possibleWords;
     }
 
     private void createLetterFreq(){
