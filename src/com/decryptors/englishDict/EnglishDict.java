@@ -42,9 +42,15 @@ public class EnglishDict {
     }
 
     public List<String> getWordByLengthCharacter(int length, Character c, int pos){
-        if(words.get(length).get(c).containsKey(pos)){
-            return words.get(length).get(c).get(pos);
+        if(words.containsKey(length)){
+            if(words.get(length).containsKey(c)){
+                if(words.get(length).get(c).containsKey(pos)){
+                    return words.get(length).get(c).get(pos);
+                }
+            }
         }
+
+
         String nl = "null";
         return new LinkedList<>();
     }

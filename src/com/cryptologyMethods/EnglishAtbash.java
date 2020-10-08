@@ -12,7 +12,8 @@ public class EnglishAtbash {
             encryptKey.put((char) i, (char)(122-(i-97)));
             decryptKey.put((char) (122-(i-97)), (char) i);
         }
-
+        encryptKey.put(' ',' ');
+        decryptKey.put(' ',' ');
     }
 
 
