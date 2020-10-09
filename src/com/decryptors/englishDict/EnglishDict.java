@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 public class EnglishDict {
     // number of letter -> character looking for -> position character in
     private final HashMap<Integer, HashMap<Character, HashMap<Integer, LinkedList<String>>>> words = new HashMap<>();
+    private final HashSet<String> wordList = new HashSet<>();
+
 
     public EnglishDict() {
         BufferedReader reader;
@@ -17,6 +19,9 @@ public class EnglishDict {
                     "src/com/decryptors/englishDict/100words.txt"));
             String line = reader.readLine();
             while (line != null) {
+                if(!wordList.contains(line)){
+                    wordList.add(line);
+                }
                 for(int i =0; i<line.length(); i++){
                     if(!words.containsKey(line.length())){
                         words.put(line.length(), new HashMap<>());
@@ -55,6 +60,10 @@ public class EnglishDict {
         return new LinkedList<>();
     }
 
+
+    public Boolean isWord(String str){
+        return wordList.contains(str);
+    }
 
     public List<String> possibleWords(String x){
         int nKnownLetters = 0;
