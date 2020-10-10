@@ -1,6 +1,6 @@
-package com.cryptologyMethods;
+package cryptologyMethods;
 
-import com.decryptors.englishDict.EnglishDict;
+import decryptors.englishDict.EnglishDict;
 
 import java.util.*;
 

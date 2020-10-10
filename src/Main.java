@@ -1,15 +1,10 @@
 //Type plaintext in lowercase without special characters, spaces, or punctuation
 
-import com.cryptologyMethods.EnglishAtbash;
-import com.dataCollection.FollowingWordProbs;
-import com.decryptors.Decryptool;
-import com.decryptors.CipherText;
-import com.decryptors.SubstitutionCipherText;
-import com.decryptors.englishDict.EnglishDict;
-import com.decryptors.frequencyAttack.CommonWords;
+import cryptologyMethods.EnglishAtbash;
+import dataCollection.FollowingWordProbs;
+import decryptors.SubstitutionCipherText;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Main {
 

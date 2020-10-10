@@ -1,4 +1,4 @@
-package com.cryptologyMethods;
+package cryptologyMethods;
 
 public class SpartanScytale {
     int nColChars;

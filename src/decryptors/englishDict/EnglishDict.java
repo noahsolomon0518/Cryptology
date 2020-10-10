@@ -1,4 +1,4 @@
-package com.decryptors.englishDict;
+package decryptors.englishDict;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ public class EnglishDict {
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(
-                    "src/com/decryptors/englishDict/100words.txt"));
+                    "src/decryptors/englishDict/100words.txt"));
             String line = reader.readLine();
             while (line != null) {
                 if(!wordList.contains(line)){
@@ -46,6 +46,9 @@ public class EnglishDict {
         }
     }
 
+
+
+    //Retrieves all words that fit into a partial plaintext thats in the form of x___x_x. Something like that
     public List<String> getWordByLengthCharacter(int length, Character c, int pos){
         if(words.containsKey(length)){
             if(words.get(length).containsKey(c)){
@@ -56,7 +59,6 @@ public class EnglishDict {
         }
 
 
-        String nl = "null";
         return new LinkedList<>();
     }
 
@@ -67,8 +69,8 @@ public class EnglishDict {
 
     public List<String> possibleWords(String x){
         int nKnownLetters = 0;
-        HashMap<String,Integer> checkIntersect = new HashMap();
-        List<String> possibleWords = new ArrayList<String>();
+        HashMap<String,Integer> checkIntersect = new HashMap<>();
+        List<String> possibleWords = new ArrayList<>();
         for(int i = 0; i<x.length(); i++){
             if(x.charAt(i)!='_' && x.charAt(i)!= ' '){
                 nKnownLetters+=1;
@@ -92,7 +94,11 @@ public class EnglishDict {
             }
         }
 
-        possibleWords.add(x);
+        if(possibleWords.size()<=1){
+            possibleWords.add(x);
+        }
+        System.out.println(possibleWords);
+
 
 
         return possibleWords;

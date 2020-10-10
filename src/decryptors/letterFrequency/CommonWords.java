@@ -1,11 +1,10 @@
-package com.decryptors.frequencyAttack;
+package decryptors.letterFrequency;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 public class CommonWords {
     private String[][] commonWords = new String[4][];

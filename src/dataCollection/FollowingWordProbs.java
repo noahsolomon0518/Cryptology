@@ -1,19 +1,18 @@
-package com.dataCollection;
+package dataCollection;
 
-import com.decryptors.englishDict.EnglishDict;
+import decryptors.englishDict.EnglishDict;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FollowingWordProbs {
     public HashMap<String, HashMap<String, Double>> followWord;
     EnglishDict dict = new EnglishDict();
     public FollowingWordProbs() throws IOException {
-        List<String> bookTextList = textToList("src/com/dataCollection/book.txt");
+        List<String> bookTextList = textToList("src/dataCollection/book.txt");
         HashMap<String, Integer> nOccurWord =  getWordFreq(bookTextList);
         followWord = followWordProbs(bookTextList, nOccurWord);
 
@@ -75,13 +74,27 @@ public class FollowingWordProbs {
 
 
         }
+        HashMap<String, HashMap<String,Double>> finalWordProps = new HashMap<>();
         wordProb.forEach((curWordMap, nextWordMap) -> {
             nextWordMap.forEach((nextWord,freq)->{
                 wordProb.get(curWordMap).put(nextWord,freq/nOccurences.get(curWordMap));
             });
+            if(nOccurences.get(curWordMap)>50){
+                finalWordProps.put(curWordMap,nextWordMap);
+            }
         });
-        System.out.println(wordProb);
+
         return wordProb;
+    }
+
+
+    public Double getFollowWordProb(String x1, String x2){
+        if(followWord.containsKey(x1)){
+            if(followWord.get(x1).containsKey(x2)){
+                return followWord.get(x1).get(x2);
+            }
+        }
+        return 0.0;
     }
 
 }
